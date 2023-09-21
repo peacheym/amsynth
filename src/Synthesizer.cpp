@@ -22,6 +22,7 @@
 #include "Synthesizer.h"
 
 #include "MidiController.h"
+#include "LibmapperController.h"
 #include "PresetController.h"
 #include "VoiceAllocationUnit.h"
 #include "VoiceBoard/VoiceBoard.h"
@@ -47,6 +48,10 @@ Synthesizer::Synthesizer()
 	_midiController = new MidiController();
 	_midiController->SetMidiEventHandler(_voiceAllocationUnit);
 	_midiController->setPresetController(*_presetController);
+
+	_libmapperController = new LibmapperController();
+	_libmapperController->setPresetController(*_presetController);
+	_libmapperController->init();
 }
 
 Synthesizer::~Synthesizer()
@@ -54,6 +59,7 @@ Synthesizer::~Synthesizer()
 	delete _midiController;
 	delete _presetController;
 	delete _voiceAllocationUnit;
+	delete _libmapperController;
 }
 
 void Synthesizer::loadBank(const char *filename)
@@ -223,6 +229,11 @@ void Synthesizer::process(unsigned int nframes,
 		needsResetAllVoices_ = false;
 		_voiceAllocationUnit->resetAllVoices();
 	}
+
+	// Poll libmapper device
+	_libmapperController->process();
+
+
 	std::vector<amsynth_midi_event_t>::const_iterator event = midi_in.begin();
 	unsigned frames_left_in_buffer = nframes, frame_index = 0;
 	while (frames_left_in_buffer) {

@@ -96,56 +96,56 @@ static gboolean osc_input_handler(GIOChannel *source, GIOCondition condition, gp
 // handle message sent by plugin host
 //
 
-static int osc_control_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
-{
-    assert(types[0] == 'i');
-    assert(types[1] == 'f');
-    float value = argv[1]->f;
-    int port_number = argv[0]->i;
-    int parameter_index = port_number - 2;
-    g_assert(parameter_index < kAmsynthParameterCount);
-    _dont_send_control_changes = TRUE;
-    gtk_adjustment_set_value(_adjustments[parameter_index], value);
-    _dont_send_control_changes = FALSE;
-    return 0;
-}
+// static int osc_control_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+// {
+//     assert(types[0] == 'i');
+//     assert(types[1] == 'f');
+//     float value = argv[1]->f;
+//     int port_number = argv[0]->i;
+//     int parameter_index = port_number - 2;
+//     g_assert(parameter_index < kAmsynthParameterCount);
+//     _dont_send_control_changes = TRUE;
+//     gtk_adjustment_set_value(_adjustments[parameter_index], value);
+//     _dont_send_control_changes = FALSE;
+//     return 0;
+// }
 
-static int osc_samplerate_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
-{
-    assert(types[0] == 'i');
-    return 0;
-}
+// static int osc_samplerate_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+// {
+//     assert(types[0] == 'i');
+//     return 0;
+// }
 
-static int osc_program_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
-{
-    assert(types[0] == 'i');
-    assert(types[1] == 'i');
-    return 0;
-}
+// static int osc_program_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+// {
+//     assert(types[0] == 'i');
+//     assert(types[1] == 'i');
+//     return 0;
+// }
 
-static int osc_show_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
-{
-    gtk_window_present(_window);
-    return 0;
-}
+// static int osc_show_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+// {
+//     gtk_window_present(_window);
+//     return 0;
+// }
 
-static int osc_hide_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
-{
-    gtk_widget_hide(GTK_WIDGET(_window));
-    return 0;
-}
+// static int osc_hide_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+// {
+//     gtk_widget_hide(GTK_WIDGET(_window));
+//     return 0;
+// }
 
-static int osc_quit_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
-{
-    gtk_main_quit();
-    return 0;
-}
+// static int osc_quit_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+// {
+//     gtk_main_quit();
+//     return 0;
+// }
 
-static int osc_fallback_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
-{
-    fprintf(stderr, "unhandled OSC message (path = '%s' types = '%s')\n", path, types);
-    return 1;
-}
+// static int osc_fallback_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+// {
+//     fprintf(stderr, "unhandled OSC message (path = '%s' types = '%s')\n", path, types);
+//     return 1;
+// }
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -235,13 +235,13 @@ int main(int argc, char *argv[])
     _osc_host_addr = lo_address_new_from_url(host_url);
     
     _osc_server = lo_server_new(nullptr, osc_error);
-    lo_server_add_method(_osc_server, tmpstr("/%s/control",     _osc_path), "if",    osc_control_handler,     nullptr);
-    lo_server_add_method(_osc_server, tmpstr("/%s/sample-rate", _osc_path), "i",     osc_samplerate_handler,  nullptr);
-    lo_server_add_method(_osc_server, tmpstr("/%s/program",     _osc_path), "ii",    osc_program_handler,     nullptr);
-    lo_server_add_method(_osc_server, tmpstr("/%s/show",        _osc_path), nullptr, osc_show_handler,        nullptr);
-    lo_server_add_method(_osc_server, tmpstr("/%s/hide",        _osc_path), nullptr, osc_hide_handler,        nullptr);
-    lo_server_add_method(_osc_server, tmpstr("/%s/quit",        _osc_path), nullptr, osc_quit_handler,        nullptr);
-    lo_server_add_method(_osc_server, nullptr, nullptr, osc_fallback_handler, nullptr);
+    // lo_server_add_method(_osc_server, tmpstr("/%s/control",     _osc_path), "if",    osc_control_handler,     nullptr);
+    // lo_server_add_method(_osc_server, tmpstr("/%s/sample-rate", _osc_path), "i",     osc_samplerate_handler,  nullptr);
+    // lo_server_add_method(_osc_server, tmpstr("/%s/program",     _osc_path), "ii",    osc_program_handler,     nullptr);
+    // lo_server_add_method(_osc_server, tmpstr("/%s/show",        _osc_path), nullptr, osc_show_handler,        nullptr);
+    // lo_server_add_method(_osc_server, tmpstr("/%s/hide",        _osc_path), nullptr, osc_hide_handler,        nullptr);
+    // lo_server_add_method(_osc_server, tmpstr("/%s/quit",        _osc_path), nullptr, osc_quit_handler,        nullptr);
+    // lo_server_add_method(_osc_server, nullptr, nullptr, osc_fallback_handler, nullptr);
     
     host_request_update();
 

@@ -37,6 +37,7 @@
 class MidiController;
 class PresetController;
 class VoiceAllocationUnit;
+class LibmapperController;
 
 struct ISynthesizer
 {
@@ -93,11 +94,13 @@ public:
 
     MidiController *getMidiController() { return _midiController; };
     PresetController *getPresetController() { return _presetController; }
+    LibmapperController *getLibmapperController() {return _libmapperController;}
 
 // private:
 
     double _sampleRate;
     MidiController *_midiController;
+    LibmapperController *_libmapperController;
     PresetController *_presetController;
     VoiceAllocationUnit *_voiceAllocationUnit;
 	

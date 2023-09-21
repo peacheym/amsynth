@@ -27,7 +27,14 @@ AM_CPPFLAGS += -DGDK_DISABLE_DEPRECATED -DGSEAL_ENABLE -DGTK_DISABLE_DEPRECATED 
 AM_CFLAGS = -Wno-declaration-after-statement
 AM_CFLAGS += -Wno-strict-prototypes
 
+## TODO: REmove
+#AM_CXXFLAGS += "-std=c++17"
+
+#AM_CXXCOMPILER = "gcc"
+
 AM_CXXFLAGS = $(WARN_CXXFLAGS)
+AM_CXXFLAGS += -I/usr/local/include/mapper
+
 
 ACLOCAL_AMFLAGS = -I m4
 
@@ -48,6 +55,8 @@ libcore_sources = \
 	src/Preset.h \
 	src/PresetController.cpp \
 	src/PresetController.h \
+	src/LibmapperController.cpp \
+	src/LibmapperController.h \
 	src/types.h \
 	src/UpdateListener.h
 
@@ -130,6 +139,8 @@ amsynth_SOURCES = \
 amsynth_CPPFLAGS = $(AM_CPPFLAGS) @ALSA_CFLAGS@ @JACK_CFLAGS@ @LASH_CFLAGS@ @LIBLO_CFLAGS@ @GTK_CFLAGS@
 
 amsynth_LDADD = @ALSA_LIBS@ @JACK_LIBS@ @LASH_LIBS@ @LIBLO_LIBS@ @LIBS@ -lX11
+
+amsynth_LDADD += -L/usr/local/lib -lmapper -llo -lpthread
 
 if BUILD_GUI
 amsynth_SOURCES += $(libgui_sources) \
