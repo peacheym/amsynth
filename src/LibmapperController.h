@@ -26,6 +26,8 @@ private:
     mapper::Graph graph;
     std::list<mapper::Signal> signals;
     std::map<std::string, float> prev_vals;
+    mapper::Signal exportSig;
+    int prevID = -1;
 
 };
 
