@@ -35,6 +35,9 @@ AM_CFLAGS += -Wno-strict-prototypes
 AM_CXXFLAGS = $(WARN_CXXFLAGS)
 AM_CXXFLAGS += -I/usr/local/include/mapper
 
+amsynth_dssi_gtk_CXXFLAGS = $(MAPPER_CFLAGS)
+amsynth_dssi_gtk_LDFLAGS  = $(MAPPER_LIBS)
+
 
 ACLOCAL_AMFLAGS = -I m4
 
